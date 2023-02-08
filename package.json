@@ -1,12 +1,12 @@
 {
   "name": "macaca-reporter",
-  "version": "1.9.15",
-  "description": "Reporter for mocha and other frameworks.",
-  "keywords": [
-    "macaca",
-    "reporter",
-    "coverage"
-  ],
+  "version": "1.0.0",
+  "description": "<p align=\"center\">   <a href=\"//macacajs.github.io\">     <img       alt=\"Macaca\"       src=\"https://macacajs.github.io/macaca-ecosystem/macaca-logo/svg/monkey.svg\"       width=\"200\"     />   </a> </p>",
+  "main": "lib/macaca-reporter.js",
+  "bin": {
+    "macaca-reporter": "./bin/macaca-reporter.js",
+    "macaca-reporter-merge": "./bin/merge-reporter.js"
+  },
   "files": [
     "bin",
     "dist/*.js",
@@ -14,15 +14,37 @@
     "lib/**/*.js",
     "lib/*.html"
   ],
-  "bin": {
-    "macaca-reporter": "./bin/macaca-reporter.js",
-    "macaca-reporter-merge": "./bin/merge-reporter.js"
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "test"
   },
-  "main": "lib/macaca-reporter.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack serve",
+    "dev:e2e": "NODE_ENV=test npm run dev",
+    "gen": "node ./scripts/dev-from-html-reporter.js",
+    "build": "cross-env NODE_ENV=production webpack",
+    "eslint": "eslint . --ext js,jsx --fix",
+    "stylelint": "stylelint --fix assets/**/*.less -s less",
+    "lint": "npm run eslint && npm run stylelint",
+    "prepublishOnly": "npm run build",
+    "test:e2e": "macaca run -d ./e2e --verbose -f mocha --f_options --recursive",
+    "test:unit": "nyc --reporter=lcov --reporter=text mocha",
+    "contributor": "git-contributor",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
   "repository": {
     "type": "git",
-    "url": "git@github.com:macacajs/macaca-reporter.git"
+    "url": "git+https://github.com/macacajs/macaca-reporter.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/macacajs/macaca-reporter/issues"
+  },
+  "homepage": "https://github.com/macacajs/macaca-reporter#readme",
   "dependencies": {
     "commander": "^9.3.0",
     "is-ci": "^2.0.0",
@@ -34,7 +56,7 @@
     "xlogger": "^1.0.6"
   },
   "optionalDependencies": {
-    "macaca-coverage": "1"
+    "macaca-coverage-mynt": "^1.0.1"
   },
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -74,10 +96,10 @@
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
     "lodash": "^4.17.4",
-    "macaca-cli": "2",
+    "macaca-cli-mynt": "^1.0.4",
     "macaca-ecosystem": "*",
     "macaca-playwright": "1",
-    "macaca-wd": "3",
+    "macaca-wd-mynt": "^1.0.0",
     "mini-css-extract-plugin": "^2.5.3",
     "nyc": "^15.1.0",
     "photoswipe": "4.1.3",
@@ -97,26 +119,9 @@
     "webpack-cli": "^4.9.0",
     "webpack-dev-server": "^4.7.4"
   },
-  "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack serve",
-    "dev:e2e": "NODE_ENV=test npm run dev",
-    "gen": "node ./scripts/dev-from-html-reporter.js",
-    "build": "cross-env NODE_ENV=production webpack",
-    "eslint": "eslint . --ext js,jsx --fix",
-    "stylelint": "stylelint --fix assets/**/*.less -s less",
-    "lint": "npm run eslint && npm run stylelint",
-    "prepublishOnly": "npm run build",
-    "test:e2e": "macaca run -d ./e2e --verbose -f mocha --f_options --recursive",
-    "test:unit": "nyc --reporter=lcov --reporter=text mocha",
-    "contributor": "git-contributor",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint"
     }
-  },
-  "homepage": "https://macacajs.github.io",
-  "license": "MIT"
+  }
 }
